@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
-    <title>Online Notes Sharing System | Home Page</title>
+    <title>OnlineNotes Sharing System | Home Page</title>
    
     
 
@@ -69,11 +69,27 @@
                             <div class="features-icon">
                                 <img src="assets/img/icon/icon2.svg" alt="">
                             </div>
-                            <div class="features-caption">
+                           
+                             <div class="features-caption">
                                 <h3>Expert instructors</h3>
                                 <p>Develop structured courses with organized modules and lessons, Upload learning materials 
-                         in multiple formats
-                     (PDFs, videos, presentations, etc.), Update and refine course content regularly.</p>
+                         in multiple formats,Updates and refine course content regularly.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="services-area">
+            <div class="container">
+                <div class="row justify-content-sm-center">
+                    <div class="col-lg-4 col-md-6 col-sm-8">
+                        <div class="single-services mb-30">
+                            <div class="features-icon">
+                                <img src="assets/img/icon/icon1.svg" alt="">
+                            </div>
+                            <div class="features-caption">
+                                <h3>Download & View Notes</h3>
+                                <p>Easily access to a wide collection of notes with our seamless 
+                                    download and viewing system. Preview notes before downloading to ensure they meet your needs. 
+                                     .</p>
                             </div>
                         </div>
                     </div>

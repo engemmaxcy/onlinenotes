@@ -26,7 +26,7 @@ $allowed_extensions = array("docs",".doc",".pdf");
 
 if(!in_array($extension1,$allowed_extensions))
 {
-echo "<script>alert('File has Invalid format. Only docs / doc/ pdf format allowed');</script>";
+echo "<script>toastr.error('File has Invalid format. Only docs / doc/ pdf format allowed');</script>";
 }
 
 // if(!in_array($extension2,$allowed_extensions))
@@ -73,12 +73,11 @@ $query->bindParam(':file4',$file4,PDO::PARAM_STR);
 
    $LastInsertId=$dbh->lastInsertId();
    if ($LastInsertId>0) {
-    echo '<script>alert("Notes has been added.")</script>';
-echo "<script>window.location.href ='add-notes.php'</script>";
+    echo '<script>toastr.success("Notes has been added.");</script>';
   }
   else
     {
-         echo '<script>alert("Something Went Wrong. Please try again")</script>';
+         echo '<script>toastr.error("Something Went Wrong. Please try again")</script>';
     }
 
   
@@ -89,7 +88,7 @@ echo "<script>window.location.href ='add-notes.php'</script>";
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ONSS || Add Notes</title>
+    <title>Add Notes</title>
   
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -99,6 +98,8 @@ echo "<script>window.location.href ='add-notes.php'</script>";
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -140,7 +141,7 @@ $("#subject").html(data);
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">Add Notes</h6>
-                            <form method="post" enctype="multipart/form-data">
+                            <form method="post" id="uploadForm" enctype="multipart/form-data">
                                 
                               
 
@@ -157,7 +158,7 @@ $("#subject").html(data);
                                     <input type="text" class="form-control"  name="subject" value="" required='true'>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail2" class="form-label">Notes Description</label>
+                                    <label for="exampleInputEmail2" class="form-label">Course Description</label>
                                     <textarea class="form-control"  name="notesdesc" value="" required='true'></textarea>
                                 </div>
                                 <div class="mb-3">
@@ -210,5 +211,6 @@ $("#subject").html(data);
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
 </body>
 </html><?php }  ?>
