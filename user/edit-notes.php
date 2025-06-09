@@ -2,33 +2,39 @@
 session_start();
 error_reporting(0);
 include('includes/dbconnection.php');
-if (strlen($_SESSION['ocasuid']==0)) {
-  header('location:logout.php');
-  } else{
-    if(isset($_POST['submit']))
-  {
 
+if (strlen($_SESSION['ocasuid']) == 0) {
+    header('location:logout.php');
+} else {
+    if (isset($_POST['submit'])) {
+        $subject = $_POST['subject'];
+        $notestitle = $_POST['notestitle'];
+        $notesdesc = $_POST['notesdesc'];
+        $eid = $_GET['editid'];
 
- $subject=$_POST['subject'];
- $notestitle=$_POST['notestitle'];
- $notesdesc=$_POST['notesdesc'];
-  $eid=$_GET['editid'];
-$sql="update tblnotes set Subject=:subject,NotesTitle=:notestitle,NotesDecription=:notesdesc where ID=:eid";
-$query=$dbh->prepare($sql);
+        $sql = "UPDATE tblnotes SET Subject=:subject, NotesTitle=:notestitle, NotesDecription=:notesdesc WHERE ID=:eid";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':subject', $subject, PDO::PARAM_STR);
+        $query->bindParam(':notestitle', $notestitle, PDO::PARAM_STR);
+        $query->bindParam(':notesdesc', $notesdesc, PDO::PARAM_STR);
+        $query->bindParam(':eid', $eid, PDO::PARAM_STR);
 
-$query->bindParam(':subject',$subject,PDO::PARAM_STR);
-$query->bindParam(':notestitle',$notestitle,PDO::PARAM_STR);
-$query->bindParam(':notesdesc',$notesdesc,PDO::PARAM_STR);
-$query->bindParam(':eid',$eid,PDO::PARAM_STR);
- $query->execute();
-         echo '<script>alert("Notes has been updated")</script>';
-         echo "<script>window.location.href ='manage-notes.php'</script>";
+        if ($query->execute()) {
+            $_SESSION['success_msg'] = "Notes has been updated successfully!";
+        } else {
+            $_SESSION['error_msg'] = "Something went wrong while updating.";
+        }
+
+        header("Location: manage-notes.php");
+        exit();
+    }
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>ONSS || Update Notes</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1">
   
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -176,4 +182,4 @@ foreach($results as $row)
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
-</html><?php }  ?>
+</html>

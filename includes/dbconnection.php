@@ -1,16 +1,26 @@
-<?php 
-// DB credentials.
-define('DB_HOST','localhost');
-define('DB_USER','root');
-define('DB_PASS','');
-define('DB_NAME','onssdb');
-// Establish database connection.
-try
-{
-$dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USER, DB_PASS,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+<?php
+class Database {
+    private $host = 'localhost';
+    private $db_name = 'onssdb';
+    private $username = 'root';
+    private $password = '';
+    public $conn;
+
+    public function connect() {
+        $this->conn = new mysqli($this->host, $this->username, $this->password, $this->db_name);
+
+        if ($this->conn->connect_error) {
+            exit("Connection failed: " . $this->conn->connect_error);
+        }
+
+        // Set character set to utf8
+        $this->conn->set_charset("utf8");
+
+        return $this->conn;
+    }
 }
-catch (PDOException $e)
-{
-exit("Error: " . $e->getMessage());
-}
+
+// Usage:
+// $database = new Database();
+// $db = $database->connect();
 ?>

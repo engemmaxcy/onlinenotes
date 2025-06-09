@@ -26,12 +26,15 @@ if(isset($_POST['submit'])) {
 
         $lastInsertId = $dbh->lastInsertId();
         if($lastInsertId) {
-            echo "<script>alert('You have successfully registered.'); window.location.href='signin.php';</script>";
+            $_SESSION['toast'] = "<script>
+                toastr.success('You have successfully registered');
+                setTimeout(function() { window.location.href = 'signin.php'; }, 2000);
+            </script>";
         } else {
-            echo "<script>alert('Something went wrong. Please try again');</script>";
+            $_SESSION['toast'] = "<script>toastr.error('Something went wrong. Please try again.');</script>";
         }
     } else {
-        echo "<script>alert('Email or Mobile Number already exists.');</script>";
+        $_SESSION['toast'] = "<script>toastr.warning('Email or Mobile Number already exists.');</script>";
     }
 }
 ?>
@@ -44,6 +47,14 @@ if(isset($_POST['submit'])) {
 
     <!-- Bootstrap + Custom Style -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <!-- jQuery (required for Toastr) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
     <style>
         body {
             background: linear-gradient(to right, #f8f9fa, #e2e6ea);
@@ -99,8 +110,18 @@ if(isset($_POST['submit'])) {
             </div>
         </div>
     </div>
+    <?php include_once('../includes/footer.php');?>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Display Toastr message if set -->
+    <?php 
+    if(isset($_SESSION['toast'])) {
+        echo $_SESSION['toast'];
+        unset($_SESSION['toast']);
+    }
+    ?>
+    
 </body>
 </html>

@@ -2,47 +2,50 @@
 session_start();
 error_reporting(0);
 include('includes/dbconnection.php');
-if (strlen($_SESSION['ocasuid']==0)) {
-  header('location:logout.php');
-  } else{
-    if(isset($_POST['submit']))
-  {
 
- 
- $eid=$_GET['editid'];
- $file2=$_FILES["file2"]["name"]; 
-$extension2 = substr($file2,strlen($file2)-4,strlen($file2));
-$allowed_extensions2 = array(".pdf");
-
-if(!in_array($extension2,$allowed_extensions2))
-{
-echo "<script>alert('File has Invalid format. Only pdf format allowed');</script>";
+if (strlen($_SESSION['ocasuid']) == 0) {
+    header('location:logout.php');
+    exit();
 }
-else
-{
 
-$file2=md5($file).time().$extension1;
-  move_uploaded_file($_FILES["file2"]["tmp_name"],"folder2/".$file2);
-$sql="update tblnotes set File2=:file2 where ID=:eid";
-$query=$dbh->prepare($sql);
+if (isset($_POST['submit'])) {
+    $eid = $_GET['editid'];
+    $file2 = $_FILES["file2"]["name"];
+    $extension2 = substr($file2, strlen($file2) - 4, strlen($file2));
+    $allowed_extensions2 = array(".pdf");
 
-$query->bindParam(':file2',$file2,PDO::PARAM_STR);
-$query->bindParam(':eid',$eid,PDO::PARAM_STR);
- $query->execute();
-  echo '<script>alert("Notes doc file has been updated")</script>';
-}
+    if (!in_array($extension2, $allowed_extensions2)) {
+        $_SESSION['error_msg'] = "Invalid file format. Only PDF allowed.";
+        header("Location: edit-notes.php?editid=$eid");
+        exit();
+    } else {
+        $newFile2Name = md5($file2) . time() . $extension2;
+        move_uploaded_file($_FILES["file2"]["tmp_name"], "folder2/" . $newFile2Name);
+
+        $sql = "UPDATE tblnotes SET File2=:file2 WHERE ID=:eid";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':file2', $newFile2Name, PDO::PARAM_STR);
+        $query->bindParam(':eid', $eid, PDO::PARAM_STR);
+        $query->execute();
+
+        $_SESSION['success_msg'] = "Notes file updated successfully.";
+        header("Location: edit-notes.php?editid=$eid");
+        exit();
+    }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>ONSS || Update Notes File</title>
-  
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -53,11 +56,11 @@ $query->bindParam(':eid',$eid,PDO::PARAM_STR);
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-</head>
 
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+</head>
 <body>
     <div class="container-fluid position-relative bg-white d-flex p-0">
         
@@ -98,7 +101,7 @@ foreach($results as $row)
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail2" class="form-label">View Old File2</label>
-                                   <a href="folder2/<?php echo $row->File2;?>" width="100" height="100" target="_blank"> <strong style="color: red">View Old File</strong></a>
+                                   <a href="folder2/<?php echo $row->File2;?>" width="100" height="100"> <strong style="color: red">View Old File</strong></a>
 
 
                                 </div>
@@ -138,7 +141,26 @@ foreach($results as $row)
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script>
+    toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        timeOut: 3000,
+        positionClass: "toast-top-right"
+    };
+
+    <?php if (isset($_SESSION['success_msg'])) { ?>
+    toastr.success("<?php echo $_SESSION['success_msg']; ?>");
+    <?php unset($_SESSION['success_msg']); } ?>
+
+    <?php if (isset($_SESSION['error_msg'])) { ?>
+    toastr.error("<?php echo $_SESSION['error_msg']; ?>");
+    <?php unset($_SESSION['error_msg']); } ?>
+</script>
 </body>
-</html><?php }  ?>
+</html>

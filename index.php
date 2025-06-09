@@ -1,9 +1,12 @@
-<!doctype html>
+<!doctype html> 
 <html class="no-js" lang="zxx">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>OnlineNotes Sharing System | Home Page</title>
    
-    
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- CSS here -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -20,7 +23,8 @@
     <link rel="stylesheet" href="assets/css/slick.css">
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    
+   
+   
 </head>
 
 <body>
@@ -51,10 +55,10 @@
         <div class="services-area">
             <div class="container">
                 <div class="row justify-content-sm-center">
-                    <div class="col-lg-4 col-md-6 col-sm-8">
+                    <div class="col-lg-4 col-md-6 col-sm-9">
                         <div class="single-services mb-30">
                             <div class="features-icon">
-                                <img src="assets/img/icon/icon1.svg" alt="">
+                                <img src="assets/img/icon/icon1.svg" alt="" class="img-fluid">
                             </div>
                             <div class="features-caption">
                                 <h3>100+  courses</h3>
@@ -67,7 +71,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-8">
                         <div class="single-services mb-30">
                             <div class="features-icon">
-                                <img src="assets/img/icon/icon2.svg" alt="">
+                                <img src="assets/img/icon/icon2.svg" alt="" class="img-fluid">
                             </div>
                            
                              <div class="features-caption">
@@ -78,82 +82,66 @@
                         </div>
                     </div>
                     <div class="services-area">
-            <div class="container">
-                <div class="row justify-content-sm-center">
-                    <div class="col-lg-4 col-md-6 col-sm-8">
-                        <div class="single-services mb-30">
-                            <div class="features-icon">
-                                <img src="assets/img/icon/icon1.svg" alt="">
-                            </div>
-                            <div class="features-caption">
-                                <h3>Download & View Notes</h3>
-                                <p>Easily access to a wide collection of notes with our seamless 
-                                    download and viewing system. Preview notes before downloading to ensure they meet your needs. 
-                                     .</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-8">
-                        <div class="single-services mb-30">
-                            <div class="features-icon">
-                                <img src="assets/img/icon/icon3.svg" alt="">
-                            </div>
-                            <div class="features-caption">
-                                <h3>Life time access</h3>
-                                <p>Continuous Learning & Knowledge Retention, Reference for Future Studies & Career Growth, Flexibility & Convenience and Access to Updated Content.</p>
+                        <div class="container">
+                            <div class="row justify-content-sm-center">
+                                <div class="col-lg-4 col-md-6 col-sm-8">
+                                    <div class="single-services mb-30">
+                                        <div class="features-icon">
+                                            <img src="assets/img/icon/icon1.svg" alt="" class="img-fluid">
+                                        </div>
+                                        <div class="features-caption">
+                                            <h3>Download & View Notes</h3>
+                                            <p>Easily access to a wide collection of notes with our seamless 
+                                                download and viewing system. Preview notes before downloading to ensure they meet your needs. 
+                                                 .</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-8">
+                                    <div class="single-services mb-30">
+                                        <div class="features-icon">
+                                            <img src="assets/img/icon/icon3.svg" alt="" class="img-fluid">
+                                        </div>
+                                        <div class="features-caption">
+                                            <h3>Life time access</h3>
+                                            <p>Continuous Learning & Knowledge Retention, Reference for Future Studies & Career Growth, Flexibility & Convenience and Access to Updated Content.</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-       
-      
-     
     </main>
  <?php include_once('includes/footer.php');?>
 
 <!-- JS here -->
 <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
-<!-- Jquery, Popper, Bootstrap -->
 <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
 <script src="./assets/js/popper.min.js"></script>
 <script src="./assets/js/bootstrap.min.js"></script>
-<!-- Jquery Mobile Menu -->
 <script src="./assets/js/jquery.slicknav.min.js"></script>
-
-<!-- Jquery Slick , Owl-Carousel Plugins -->
 <script src="./assets/js/owl.carousel.min.js"></script>
 <script src="./assets/js/slick.min.js"></script>
-<!-- One Page, Animated-HeadLin -->
 <script src="./assets/js/wow.min.js"></script>
 <script src="./assets/js/animated.headline.js"></script>
 <script src="./assets/js/jquery.magnific-popup.js"></script>
-
-<!-- Date Picker -->
 <script src="./assets/js/gijgo.min.js"></script>
-<!-- Nice-select, sticky -->
 <script src="./assets/js/jquery.nice-select.min.js"></script>
 <script src="./assets/js/jquery.sticky.js"></script>
-<!-- Progress -->
 <script src="./assets/js/jquery.barfiller.js"></script>
-
-<!-- counter , waypoint,Hover Direction -->
 <script src="./assets/js/jquery.counterup.min.js"></script>
 <script src="./assets/js/waypoints.min.js"></script>
 <script src="./assets/js/jquery.countdown.min.js"></script>
 <script src="./assets/js/hover-direction-snake.min.js"></script>
-
-<!-- contact js -->
 <script src="./assets/js/contact.js"></script>
 <script src="./assets/js/jquery.form.js"></script>
 <script src="./assets/js/jquery.validate.min.js"></script>
 <script src="./assets/js/mail-script.js"></script>
 <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
-
-<!-- Jquery Plugins, main Jquery -->	
 <script src="./assets/js/plugins.js"></script>
 <script src="./assets/js/main.js"></script>
-
 </body>
 </html>

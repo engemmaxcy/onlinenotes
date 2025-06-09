@@ -2,6 +2,8 @@
 session_start();
 include('includes/dbconnection.php');
 
+$toastrScript = "";
+
 if (isset($_POST['login'])) {
     $emailOrMob = $_POST['emailormobnum'];
     $password = md5($_POST['password']);
@@ -18,9 +20,18 @@ if (isset($_POST['login'])) {
         $_SESSION['ocasuid'] = $result->ID;
         $_SESSION['login'] = $emailOrMob;
 
-        echo "<script>window.location.href='dashboard.php';</script>";
+        $toastrScript = "
+        <script>
+            toastr.success('Login successful!');
+            setTimeout(function() {
+                window.location.href = 'dashboard.php';
+            }, 1500);
+        </script>";
     } else {
-        echo "<script>alert('Invalid email/mobile number or password. Please try again.');</script>";
+        $toastrScript = "
+        <script>
+            toastr.error('Invalid email or mobile number or password. Please try again.');
+        </script>";
     }
 }
 ?>
@@ -28,19 +39,33 @@ if (isset($_POST['login'])) {
 <html lang="en">
 <head>
     <title>Sign In</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+
     <!-- Stylesheets -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+
+    <style>
+        .toast-success {
+            background-color: #28a745 !important;
+            color: #fff !important;
+        }
+        .toast-error {
+            background-color: #dc3545 !important;
+            color: #fff !important;
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid position-relative bg-white d-flex p-0">
@@ -63,11 +88,11 @@ if (isset($_POST['login'])) {
                         </div>
                         <form method="post">
                             <div class="form-floating mb-3">
-                                <input type="text" name="emailormobnum" class="form-control" placeholder="Email or Mobile Number" required>
+                                <input type="text" name="emailormobnum" class="form-control" placeholder="Email or Mobile Number" required />
                                 <label>Email or Mobile Number</label>
                             </div>
                             <div class="form-floating mb-4">
-                                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                                <input type="password" name="password" class="form-control" placeholder="Password" required />
                                 <label>Password</label>
                             </div>
                             <div class="mb-3 text-end">
@@ -85,9 +110,10 @@ if (isset($_POST['login'])) {
         </div>
         <!-- Sign In End -->
     </div>
+    <?php include_once('../includes/footer.php');?>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/chart/chart.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
@@ -97,5 +123,31 @@ if (isset($_POST['login'])) {
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
     <script src="js/main.js"></script>
+
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <!-- Toastr Options -->
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": true,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "3000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+    </script>
+
+    <!-- Injected Toastr Message -->
+    <?= $toastrScript ?>
 </body>
 </html>
